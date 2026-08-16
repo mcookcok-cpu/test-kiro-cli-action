@@ -1,19 +1,18 @@
-name: Test Kiro CLI Model and Chat
+name: Test Kiro CLI with Copilot
 
 on:
   workflow_dispatch:
 
 jobs:
-  test-model:
+  test-copilot:
     runs-on: ubuntu-latest
     steps:
       - name: Install Kiro CLI
         run: |
           curl -fsSL https://cli.kiro.dev/install | bash
 
-      - name: Test Chat Command with Input
+      - name: Check All Help & Model Options
         run: |
           export PATH="$HOME/.local/bin:$PATH"
-          # Coba jalankan non-interaktif dengan input string (atau cek help agent/model)
-          kiro-cli chat "Hello, what model are you using?" || true
-          kiro-cli agent --help || true
+          kiro-cli --help-all || true
+          kiro-cli chat --help || true
