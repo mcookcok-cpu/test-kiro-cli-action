@@ -1,23 +1,30 @@
-name: Test Kiro CLI Install
+name: Test Kiro CLI Model and Chat
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ main, master ]
 
 jobs:
-  test-install:
+  test-model:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Install Kiro CLI
         run: |
           curl -fsSL https://cli.kiro.dev/install | bash
 
-      - name: Verify Installation
+      - name: Check CLI Help and Options
         run: |
           export PATH="$HOME/.local/bin:$PATH"
-          kiro-cli --version || ~/.local/bin/kiro-cli --version || echo "Binary not found directly"
-          ls -la ~/.local/bin/
+          kiro-cli --help || true
+          kiro-cli config --help || true
+          kiro-cli chat --help || true
+          
+      - name: Inspect binary strings or config paths
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          # Cek file konfigurasi atau direktori setting jika ada
+          find ~/.config -name "*kiro*" -o -name "*q*" 2>/dev/null || true
+          find ~/.local -name "*kiro*" -o -name "*q*" 2>/dev/null || true
+          
+          # Cek bantuan/versi dari binary chat dan term
+          ~/.local/bin/kiro-cli-chat --help || true
+          ~/.local/bin/kiro-cli-term --help || true
