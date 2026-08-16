@@ -11,20 +11,9 @@ jobs:
         run: |
           curl -fsSL https://cli.kiro.dev/install | bash
 
-      - name: Check CLI Help and Options
+      - name: Check Chat Help & Models
         run: |
           export PATH="$HOME/.local/bin:$PATH"
-          kiro-cli --help || true
-          kiro-cli config --help || true
           kiro-cli chat --help || true
-          
-      - name: Inspect binary strings or config paths
-        run: |
-          export PATH="$HOME/.local/bin:$PATH"
-          # Cek file konfigurasi atau direktori setting jika ada
-          find ~/.config -name "*kiro*" -o -name "*q*" 2>/dev/null || true
-          find ~/.local -name "*kiro*" -o -name "*q*" 2>/dev/null || true
-          
-          # Cek bantuan/versi dari binary chat dan term
-          ~/.local/bin/kiro-cli-chat --help || true
-          ~/.local/bin/kiro-cli-term --help || true
+          # Cek jika ada subcommand model atau opsi model
+          kiro-cli chat --model "" || true
