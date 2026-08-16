@@ -11,9 +11,9 @@ jobs:
         run: |
           curl -fsSL https://cli.kiro.dev/install | bash
 
-      - name: Check Chat Help & Models
+      - name: Test Chat Command with Input
         run: |
           export PATH="$HOME/.local/bin:$PATH"
-          kiro-cli chat --help || true
-          # Cek jika ada subcommand model atau opsi model
-          kiro-cli chat --model "" || true
+          # Coba jalankan non-interaktif dengan input string (atau cek help agent/model)
+          kiro-cli chat "Hello, what model are you using?" || true
+          kiro-cli agent --help || true
