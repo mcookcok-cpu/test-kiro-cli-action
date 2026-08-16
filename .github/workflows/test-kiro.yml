@@ -1,0 +1,23 @@
+name: Test Kiro CLI Install
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  test-install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Kiro CLI
+        run: |
+          curl -fsSL https://cli.kiro.dev/install | bash
+
+      - name: Verify Installation
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          kiro-cli --version || ~/.local/bin/kiro-cli --version || echo "Binary not found directly"
+          ls -la ~/.local/bin/
